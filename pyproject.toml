@@ -1,6 +1,6 @@
 [project]
 name = "shisis-async"
-version = "1.0.0"
+version = "1.2.0"
 description = "TU-Berlin Isis Shibboleth login library"
 authors = [
   {name = "bchmnn",email = "shisis@gandalf.mozmail.com"},
