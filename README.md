@@ -1,5 +1,7 @@
 # Shisis
 
+[![PyPI version](https://badge.fury.io/py/shisis-async.svg)](https://badge.fury.io/py/shisis-async)
+
 [Shisis](http://shisi.urbanup.com/16192641) (**Sh**ibboleth **ISIS**) is a small library to handle authentication for TU-Berlin's Moodle instance "ISIS" via Shibboleth.
 
 ## Install
@@ -88,4 +90,3 @@ async def main():
 
 asyncio.run(main())
 ```
-
