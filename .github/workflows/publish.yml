@@ -1,0 +1,50 @@
+name: Release and Publish
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    environment: pypi
+
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          release-type: python
+
+      - uses: actions/checkout@v4
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Install build
+        run: pip install build
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Build package
+        run: python -m build
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Upload release artifacts to GitHub
+        run: gh release upload ${{ steps.release.outputs.tag_name }} dist/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ steps.release.outputs.release_created }}
+

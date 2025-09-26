@@ -1,0 +1,27 @@
+[project]
+name = "shisis-async"
+version = "0.0.1"
+description = "TU-Berlin Isis Shibboleth login library"
+authors = [
+  {name = "bchmnn",email = "shisis@gandalf.mozmail.com"},
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+keywords = ["Moodle", "Isis", "Shibboleth", "TU-Berlin", "Authentication"]
+requires-python = ">=3.9"
+dependencies = [
+  "aiohttp >=3.0,<4.0",
+  "beautifulsoup4 >=4.0,<5.0",
+  "lxml >=5.0,<7.0"
+]
+
+[project.scripts]
+shisis = "shisis.__main__:cli"
+
+[project.urls]
+Repository = "https://github.com/bchmnn/shisis-async"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
