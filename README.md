@@ -40,16 +40,7 @@ from shisis import Shisis
 async def main():
     async with aiohttp.ClientSession() as session:
         shisis = Shisis(session)
-        public_config = Shisis.PublicConfig(
-            launchurl="https://isis.tu-berlin.de/admin/tool/mobile/launch.php",
-            httpswwwroot="https://isis.tu-berlin.de",
-        )
-        identity_providers = Shisis.IdentityProvider(
-            url="https://isis.tu-berlin.de/auth/shibboleth/index.php"
-        )
-        tokens = await shisis.authenticate(
-            "username", "password", public_config, identity_providers
-        )
+        tokens = await shisis.authenticate("username", "password")
         print(tokens)
 
 

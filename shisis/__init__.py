@@ -204,9 +204,14 @@ class Shisis:
         self,
         username: str,
         password: str,
-        public_config: "Shisis.PublicConfigProtocol",
+        public_config: "Shisis.PublicConfigProtocol" = PublicConfig(
+            launchurl="https://isis.tu-berlin.de/admin/tool/mobile/launch.php",
+            httpswwwroot="https://isis.tu-berlin.de",
+        ),
         # pylint: disable=line-too-long
-        identity_providers: "Optional[List[Shisis.IdentityProviderProtocol] | Shisis.IdentityProviderProtocol]",
+        identity_providers: "List[Shisis.IdentityProviderProtocol] | Shisis.IdentityProviderProtocol" = IdentityProvider(
+            url="https://isis.tu-berlin.de/auth/shibboleth/index.php"
+        ),
     ) -> Tokens:
         """Authenticate a user against ISIS using Shibboleth SSO.
 
