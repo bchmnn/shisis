@@ -1,8 +1,13 @@
-# Shisis
+<h1 align="center">Shisis - <b>Sh</b>ibboleth <b>ISIS</b></h1>
 
-[![PyPI version](https://badge.fury.io/py/shisis-async.svg)](https://badge.fury.io/py/shisis-async)
+<p align="center">
+<a href=""><img alt="" src=""></a>
+<a href="https://badge.fury.io/py/shisis-async"><img alt="PyPI" src="https://badge.fury.io/py/shisis-async.svg"></a>
+<a href="https://github.com/bchmnn/shisis/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/github/license/bchmnn/shisis.svg"></a>
+<a href="https://github.com/bchmnn/shisis"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+</p>
 
-[Shisis](http://shisi.urbanup.com/16192641) (**Sh**ibboleth **ISIS**) is a small library to handle authentication for TU-Berlin's Moodle instance "ISIS" via Shibboleth.
+[Shisis](http://shisi.urbanup.com/16192641) is a small library to handle authentication for TU-Berlin's Moodle instance "ISIS" via Shibboleth.
 
 ## Install
 
@@ -81,3 +86,20 @@ async def main():
 
 asyncio.run(main())
 ```
+
+## License
+
+GPL-3.0
+
+## Contributions
+
+Contributions are welcome.
+
+To contribute changes, open a PR on the `main` branch.
+
+> [!NOTE]\
+> Before commiting, run `pip install -r requirements-dev.txt && make format && make lint` and fix linting errors.
+
+## Changelog
+
+See [CHANGELOG.md](https://github.com/bchmnn/shisis/blob/main/CHANGELOG.md)
