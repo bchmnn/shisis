@@ -1,3 +1,11 @@
+"""
+shisis CLI tool.
+
+This script provides a command-line interface to authenticate against
+ISIS (TU Berlin) using Shibboleth credentials. It supports retrieving
+authentication tokens or a private token for further API access.
+"""
+
 import argparse
 import asyncio
 import json
@@ -58,7 +66,7 @@ async def main():
         password = os.environ.get("SHISIS_PASS")
 
     if username is None or password is None:
-        raise Exception("Username or password are not defined")
+        raise ValueError("Username or password are not defined")
 
     async with aiohttp.ClientSession() as session:
         shisis = Shisis(session)
@@ -93,3 +101,7 @@ async def main():
 
 def cli():
     asyncio.run(main())
+
+
+if __name__ == "__main__":
+    cli()

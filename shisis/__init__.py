@@ -1,3 +1,10 @@
+"""
+shisis authentication module.
+
+This module provides the `Shisis` class, which implements authentication
+against the Moodle instance ISIS (TU Berlin) using Shibboleth SSO.
+"""
+
 import base64
 import hashlib
 import random
@@ -14,6 +21,19 @@ X_WWW_FORM_URLENCODED = "application/x-www-form-urlencoded"
 
 
 class Shisis:
+    """
+    Client for authenticating against ISIS (TU Berlin) via Shibboleth SSO.
+
+    Attributes:
+        session (aiohttp.ClientSession): The HTTP session used for requests.
+
+    Nested Classes:
+        Error: Custom exception for Shisis-specific errors.
+        Tokens: Dataclass holding public and private tokens.
+        IdentityProvider: Dataclass describing an identity provider.
+        PublicConfig: Dataclass describing the public configuration.
+    """
+
     session: aiohttp.ClientSession
 
     def __init__(
@@ -110,6 +130,7 @@ class Shisis:
         # if redirects are handled by aiohttp
         token: Optional[str] = None
 
+        # pylint: disable=unused-argument
         async def on_request_redirect(
             session,
             context,
@@ -184,8 +205,28 @@ class Shisis:
         username: str,
         password: str,
         public_config: "Shisis.PublicConfigProtocol",
+        # pylint: disable=line-too-long
         identity_providers: "Optional[List[Shisis.IdentityProviderProtocol] | Shisis.IdentityProviderProtocol]",
     ) -> Tokens:
+        """Authenticate a user against ISIS using Shibboleth SSO.
+
+        Args:
+            username (str): The Shibboleth username.
+            password (str): The Shibboleth password.
+            public_config (Shisis.PublicConfigProtocol): Public configuration
+                data containing the launch URL and HTTPS root.
+            identity_providers (Optional[List[Shisis.IdentityProviderProtocol] | Shisis.IdentityProviderProtocol]):
+                Identity provider from which to initiate authentication.
+
+        Returns:
+            Shisis.Tokens: A dataclass containing the public token and private token.
+
+        Raises:
+            Shisis.Error: If configuration or identity provider data is invalid,
+                or if token extraction fails.
+            ValueError: If login form submission indicates invalid credentials.
+        """
+
         if public_config.launchurl is None:
             raise Shisis.Error("public_config did not provide launchurl")
         if identity_providers is None:
