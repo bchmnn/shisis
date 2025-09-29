@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.1](https://github.com/bchmnn/shisis/compare/v1.2.0...v1.2.1) (2025-09-29)
+
+
+### Bug Fixes
+
+* add default values to Shisis::authenticate's public_config and identity_providers arguments ([9724e77](https://github.com/bchmnn/shisis/commit/9724e77d6bd233d79a99693debb1c002a9a7c628))
+
+
+### Documentation
+
+* add docstrings ([c571bc7](https://github.com/bchmnn/shisis/commit/c571bc7a7841bc6972e599bfa4d729ae25d059cc))
+* **README:** add badges & add contribution guide ([4fa972e](https://github.com/bchmnn/shisis/commit/4fa972ecc67ff34cbabe7659ef6ee8ab82abb165))
+* **README:** add pypi badge ([ea54b97](https://github.com/bchmnn/shisis/commit/ea54b97139dc1f0403ad00ae8ef16e91edfd0974))
+
 ## [1.2.0](https://github.com/bchmnn/shisis/compare/v1.0.0...v1.2.0) (2025-09-26)
 
 
