@@ -15,6 +15,16 @@ dependencies = [
   "lxml >=5.0,<7.0"
 ]
 
+[project.optional-dependencies]
+dev = [
+    "black",
+    "mypy",
+    "pyright",
+    "ruff",
+    "pylint",
+    "isort",
+]
+
 [project.scripts]
 shisis = "shisis.__main__:cli"
 
