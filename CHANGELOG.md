@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/bchmnn/shisis/compare/v1.2.1...v1.2.2) (2025-10-02)
+
+
+### Bug Fixes
+
+* add py.typed ([c44d985](https://github.com/bchmnn/shisis/commit/c44d98565e8d2705517b9a96c288aba2284e5081))
+
 ## [1.2.1](https://github.com/bchmnn/shisis/compare/v1.2.0...v1.2.1) (2025-09-29)
 
 
