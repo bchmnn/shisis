@@ -6,11 +6,12 @@ ISIS (TU Berlin) using Shibboleth credentials. It supports retrieving
 authentication tokens or a private token for further API access.
 """
 
+from __future__ import annotations
+
 import argparse
 import asyncio
 import json
 import os
-from typing import Optional
 from urllib.parse import quote
 
 import aiohttp
@@ -20,8 +21,8 @@ from shisis import Shisis
 
 async def main():
     class Arguments:
-        username: Optional[str]
-        password: Optional[str]
+        username: str | None
+        password: str | None
         token: bool
         private_token: bool
 

@@ -5,12 +5,14 @@ This module provides the `Shisis` class, which implements authentication
 against the Moodle instance ISIS (TU Berlin) using Shibboleth SSO.
 """
 
+from __future__ import annotations
+
 import base64
 import hashlib
 import random
 import re
 from dataclasses import dataclass
-from typing import List, Optional, Protocol
+from typing import Protocol
 
 import aiohttp
 from bs4 import BeautifulSoup as bs4
@@ -51,11 +53,11 @@ class Shisis:
         private_token: str
 
     class IdentityProviderProtocol(Protocol):
-        url: Optional[str]
+        url: str | None
 
     @dataclass
     class IdentityProvider:
-        url: Optional[str] = None
+        url: str | None = None
 
         @classmethod
         def from_dict(cls, **entries):
@@ -64,13 +66,13 @@ class Shisis:
             return instance
 
     class PublicConfigProtocol(Protocol):
-        launchurl: Optional[str]
-        httpswwwroot: Optional[str]
+        launchurl: str | None
+        httpswwwroot: str | None
 
     @dataclass
     class PublicConfig:
-        launchurl: Optional[str] = None
-        httpswwwroot: Optional[str] = None
+        launchurl: str | None = None
+        httpswwwroot: str | None = None
 
         @classmethod
         def from_dict(cls, **entries):
@@ -128,7 +130,7 @@ class Shisis:
         # we have to do this hack, since the scheme
         # "moodlemobile" will raise an exception
         # if redirects are handled by aiohttp
-        token: Optional[str] = None
+        token: str | None = None
 
         # pylint: disable=unused-argument
         async def on_request_redirect(
@@ -186,14 +188,14 @@ class Shisis:
         except (
             ValueError,
             aiohttp.NonHttpUrlRedirectClientError,
-        ) as error:
+        ):
             # this is the exception raised due to
             # aiohttp not knowing how to handle
             # "moodlemobile" scheme
             if not token:
-                raise error
+                raise
         finally:
-            if "j_password" in data.keys():
+            if "j_password" in data:
                 raise ValueError("Your Credentials were refused. Please check them.")
             self.session.trace_configs.remove(trace_config)
 
@@ -206,24 +208,24 @@ class Shisis:
         self,
         username: str,
         password: str,
-        public_config: "Shisis.PublicConfigProtocol" = PublicConfig(
-            launchurl="https://isis.tu-berlin.de/admin/tool/mobile/launch.php",
-            httpswwwroot="https://isis.tu-berlin.de",
-        ),
-        # pylint: disable=line-too-long
-        identity_providers: "List[Shisis.IdentityProviderProtocol] | Shisis.IdentityProviderProtocol" = IdentityProvider(
-            url="https://isis.tu-berlin.de/auth/shibboleth/index.php"
-        ),
+        public_config: Shisis.PublicConfigProtocol | None = None,
+        identity_providers: (
+            list[Shisis.IdentityProviderProtocol]
+            | Shisis.IdentityProviderProtocol
+            | None
+        ) = None,
     ) -> Tokens:
         """Authenticate a user against ISIS using Shibboleth SSO.
 
         Args:
             username (str): The Shibboleth username.
             password (str): The Shibboleth password.
-            public_config (Shisis.PublicConfigProtocol): Public configuration
+            public_config (Shisis.PublicConfigProtocol | None): Public configuration
                 data containing the launch URL and HTTPS root.
-            identity_providers (Optional[List[Shisis.IdentityProviderProtocol] | Shisis.IdentityProviderProtocol]):
-                Identity provider from which to initiate authentication.
+            identity_providers (
+                    list[Shisis.IdentityProviderProtocol]
+                    | Shisis.IdentityProviderProtocol
+                    | None): Identity provider from which to initiate authentication.
 
         Returns:
             Shisis.Tokens: A dataclass containing the public token and private token.
@@ -233,13 +235,22 @@ class Shisis:
                 or if token extraction fails.
             ValueError: If login form submission indicates invalid credentials.
         """
+        if not public_config:
+            public_config = Shisis.PublicConfig(
+                launchurl="https://isis.tu-berlin.de/admin/tool/mobile/launch.php",
+                httpswwwroot="https://isis.tu-berlin.de",
+            )
+        if not identity_providers:
+            identity_providers = Shisis.IdentityProvider(
+                url="https://isis.tu-berlin.de/auth/shibboleth/index.php"
+            )
 
         if public_config.launchurl is None:
             raise Shisis.Error("public_config did not provide launchurl")
         if identity_providers is None:
             raise Shisis.Error("Identityproviders is none")
-        identity_provider: Optional[str]
-        if isinstance(identity_providers, List):
+        identity_provider: str | None
+        if isinstance(identity_providers, list):
             if len(identity_providers) == 0:
                 raise Shisis.Error("Identityproviders list is empty")
             identity_provider = identity_providers[0].url
