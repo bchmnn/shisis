@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.3.0](https://github.com/bchmnn/shisis/compare/v1.2.2...v1.3.0) (2026-08-08)
+
+
+### Features
+
+* migrate to uv ([4a911b3](https://github.com/bchmnn/shisis/commit/4a911b343425f3393b1422e8875eb1fc98b9d5d0))
+
+
+### Bug Fixes
+
+* filter potential undefined keys or values in formdata ([c2cd2ac](https://github.com/bchmnn/shisis/commit/c2cd2ac2a4588d59c8554cc49c0860f775029a88))
+* fix linter errors ([544ad35](https://github.com/bchmnn/shisis/commit/544ad353fa498ec07a3790d7df41feefa570dd48))
+* remove unnecessary `from __future__ import annotations` ([55b12a9](https://github.com/bchmnn/shisis/commit/55b12a9ad16e0d31125962bab296832842f36692))
+
 ## [1.2.2](https://github.com/bchmnn/shisis/compare/v1.2.1...v1.2.2) (2025-10-02)
 
 
