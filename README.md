@@ -98,7 +98,7 @@ Contributions are welcome.
 To contribute changes, open a PR on the `main` branch.
 
 > [!NOTE]\
-> Before commiting, run `pip install -r requirements-dev.txt && make format && make lint` and fix linting errors.
+> Before commiting, run `git config core.hooksPath .githooks` and fix linting errors.
 
 ## Changelog
 

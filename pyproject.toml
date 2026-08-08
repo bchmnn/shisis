@@ -8,23 +8,23 @@ authors = [
 license = { file = "LICENSE" }
 readme = "README.md"
 keywords = ["Moodle", "Isis", "Shibboleth", "TU-Berlin", "Authentication"]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
   "aiohttp >=3.0,<4.0",
   "beautifulsoup4 >=4.0,<5.0",
   "lxml >=5.0,<7.0"
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
-    "pip-tools",
-    "black",
-    "mypy",
-    "pyright",
-    "ruff",
-    "pylint",
-    "isort",
+    "black>=26.5.1",
+    "isort>=8.0.1",
+    "pyright>=1.1.411",
+    "ruff>=0.16.2",
 ]
+
+[tool.isort]
+profile = "black"
 
 [project.scripts]
 shisis = "shisis.__main__:cli"
@@ -33,9 +33,9 @@ shisis = "shisis.__main__:cli"
 Repository = "https://github.com/bchmnn/shisis-async"
 
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["uv_build>=0.12.1,<0.13.0"]
+build-backend = "uv_build"
 
-[tool.setuptools.package-data]
-"shisis" = ["py.typed"]
-
+[tool.uv.build-backend]
+module-root = "" # we don't want a src dir
+module-name = "shisis"
