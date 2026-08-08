@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+RESET='\e[0m'
+BOLD='\e[1m'
+
+function log {
+    local msg=$1
+    echo -e "==> $msg"
+}
+
+function run {
+    local cmd=$1
+    log "$cmd"
+    eval "$cmd"
+}
+
+staged=$(git diff --name-only --cached --diff-filter=d | grep -P "shisis.*\.py")
+staged=$(echo "$staged" | tr '\r\n' ' ' | xargs)
+
+if [[ "$staged" != "" ]]; then
+    echo -e "$BOLD==> Running pre-commit format hook$RESET"
+    run "uv run isort $staged"
+    run "uv run black $staged"
+    run "git add $staged"
+    echo
+fi
+

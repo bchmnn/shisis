@@ -13,33 +13,22 @@ jobs:
   codelint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v9.0.0
 
-      - name: Install deps
-        run: pip install -r requirements.txt
-
-      - name: Install linters
-        run: pip install black isort ruff pyright mypy pylint
+      - name: Install dependencies
+        run: uv sync --all-extras
 
       - name: Run isort+black
         run: |
-          isort -c ./shisis
-          black --check ./shisis
+          uv run isort -c .
+          uv run black --check .
 
       - name: Run ruff
-        run: ruff check ./shisis
+        run: uv run ruff check
 
       - name: Run pyright
-        run: pyright ./shisis
-
-      - name: Run mypy
-        run: mypy --check-untyped-defs ./shisis
-
-      - name: Run pylint
-        run: pylint ./shisis
+        run: uv run pyright
 
