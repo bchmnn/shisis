@@ -167,9 +167,11 @@ class Shisis:
 
             inputs = soup.find_all("input")
             data = {
-                input_.get("name"): input_.get("value")
+                name: value
                 for input_ in inputs
                 if isinstance(input_, Tag)
+                and (name := input_.get("name"))
+                and (value := input_.get("value"))
             }
 
             action = form.get("action")
