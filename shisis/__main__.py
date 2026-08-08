@@ -6,8 +6,6 @@ ISIS (TU Berlin) using Shibboleth credentials. It supports retrieving
 authentication tokens or a private token for further API access.
 """
 
-from __future__ import annotations
-
 import argparse
 import asyncio
 import json
