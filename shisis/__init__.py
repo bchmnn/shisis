@@ -48,6 +48,9 @@ class Shisis:
     class Error(Exception):
         pass
 
+    class LoginError(Exception):
+        pass
+
     @dataclass
     class Tokens:
         token: str
@@ -179,7 +182,7 @@ class Shisis:
 
             errors = form.find_all("span", {"class": "login-error"})
             if errors:
-                raise Shisis.Error(errors[0].decode_contents())
+                raise Shisis.LoginError(errors[0].decode_contents())
 
             action = form.get("action")
             if action is None:
@@ -247,6 +250,7 @@ class Shisis:
         Raises:
             Shisis.Error: If configuration or identity provider data is invalid,
                 or if token extraction fails.
+            Shisis.LoginError: If identity provider reports a login-error.
             ValueError: If login form submission indicates invalid credentials.
         """
         if not public_config:
