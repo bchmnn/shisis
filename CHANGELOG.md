@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.1](https://github.com/bchmnn/shisis/compare/v1.3.0...v1.3.1) (2026-11-06)
+
+
+### Bug Fixes
+
+* add LoginError class for errors reported by identity provider ([a05d3a4](https://github.com/bchmnn/shisis/commit/a05d3a4721abfb053fae7a7cf3eab8a60d23ad02))
+* improve authentication error handling ([398713a](https://github.com/bchmnn/shisis/commit/398713ad83f258b1256d25e329672f1485cef87a))
+
 ## [1.3.0](https://github.com/bchmnn/shisis/compare/v1.2.2...v1.3.0) (2026-08-08)
 
 
