@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.10"
 
 [[package]]
@@ -904,7 +904,7 @@ wheels = [
 
 [[package]]
 name = "shisis-async"
-version = "1.2.1"
+version = "1.3.0"
 source = { editable = "." }
 dependencies = [
     { name = "aiohttp" },

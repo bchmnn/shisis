@@ -13,6 +13,7 @@ import random
 import re
 from dataclasses import dataclass
 from typing import Protocol
+from urllib import parse
 
 import aiohttp
 from bs4 import BeautifulSoup as bs4
@@ -176,11 +177,24 @@ class Shisis:
                 and (value := input_.get("value"))
             }
 
+            errors = form.find_all("span", {"class": "login-error"})
+            if errors:
+                raise Shisis.Error(errors[0].decode_contents())
+
             action = form.get("action")
             if action is None:
                 raise Shisis.Error("No action found in form")
+
+            parsed_url = parse.urlparse(url)
+            action_url = action if isinstance(action, str) else action[0]
+            action_url = parse.urlparse(action_url)
+            if not action_url.scheme:
+                action_url = action_url._replace(scheme=parsed_url.scheme)
+            if not action_url.netloc:
+                action_url = action_url._replace(netloc=parsed_url.netloc)
+
             await self.session.post(
-                action if isinstance(action, str) else action[0],
+                action_url.geturl(),
                 data=data,
                 headers={CONTENT_TYPE: X_WWW_FORM_URLENCODED},
             )
